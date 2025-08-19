@@ -16,6 +16,7 @@ class LinkedList
     void Add(int32_t value);
     void Delete(Node *doomedNode);
     void Reverse();
+    Node* GetNodeByValue(int32_t value);
     std::string GetList() const;
   private:
     Node *head;

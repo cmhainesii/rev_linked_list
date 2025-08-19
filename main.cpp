@@ -1,5 +1,6 @@
 #include <iostream>
 #include <format>
+#include <array>
 #include <random>
 
 #include "LinkedList.h"
@@ -20,20 +21,23 @@ int main()
 
     std::cout << std::format("{}\n", myList.GetList());
 
-
-
-    // Ok, now let's have some real fun!
-    std::random_device rd;
-    std::mt19937 gen(rd());
-    std::uniform_int_distribution<int> distInt(69, 420);
-    std::uniform_real_distribution<double> distDouble(0.0, 1.0);
-    LinkedList myBrandNewList = LinkedList();
-    for (auto i = 0; i < 20000000; i++)
+    std::array<Node*, 3> selectedNodes;
+    selectedNodes.at(0) = myList.GetNodeByValue(static_cast<int32_t>(10));
+    selectedNodes.at(1) = myList.GetNodeByValue(static_cast<int32_t>(15));
+    selectedNodes.at(2) = myList.GetNodeByValue(static_cast<int32_t>(0));
+    for (auto i = 0; i < 3; ++i)
     {
-        myBrandNewList.Add(distInt(gen));
+        myList.Delete(selectedNodes.at(i));
+        
     }
-    std::cout << "done\n";
-    std::cin.get();
+    selectedNodes.fill(nullptr);
+    std::cout << std::format("{}\n", myList.GetList());
 
+    myList.Add(100);
+    myList.Add(400);
+    myList.Add(800);
+
+    std::cout << std::format("{}\n", myList.GetList());
+    
     return 0;
 }

@@ -95,3 +95,23 @@ LinkedList::~LinkedList()
     }
     head = nullptr;
 }
+
+Node* LinkedList::GetNodeByValue(int32_t value)
+{
+    Node *result = nullptr;
+    
+    // Traverse starting at head
+    Node *current = head;
+
+    while(current)
+    {
+        if(current->value == value) {
+            result = current;
+            break;
+        }
+        current = current->next;
+
+    }
+
+    return result;
+}
