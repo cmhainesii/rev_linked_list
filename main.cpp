@@ -38,6 +38,16 @@ int main()
     myList.Add(800);
 
     std::cout << std::format("{}\n", myList.GetList());
+
+    // Try clearing the list:
+    myList.Clear();
+
+    std::cout << std::format("Blank: {}\n", myList.GetList());
+
+    myList.Add(420);
+    myList.Add(69);
+
+    std::cout << std::format("Not blank: {}\n", myList.GetList());
     
     return 0;
 }

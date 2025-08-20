@@ -18,6 +18,7 @@ class LinkedList
     void Reverse();
     Node* GetNodeByValue(int32_t value);
     std::string GetList() const;
+    void Clear();
   private:
     Node *head;
 };

@@ -86,14 +86,7 @@ void LinkedList::Reverse()
 
 LinkedList::~LinkedList()
 {
-    Node* current = head;
-    while(current)
-    {
-        Node* next = current->next;
-        delete current;
-        current = next;
-    }
-    head = nullptr;
+    Clear();
 }
 
 Node* LinkedList::GetNodeByValue(int32_t value)
@@ -114,4 +107,17 @@ Node* LinkedList::GetNodeByValue(int32_t value)
     }
 
     return result;
+}
+
+void LinkedList::Clear()
+{
+    // Traverse the list and delete every node on the way!
+    Node* current = head;
+    while(current)
+    {
+        Node *next = current->next;
+        delete current;
+        current = next;
+    }
+    head = nullptr;
 }
