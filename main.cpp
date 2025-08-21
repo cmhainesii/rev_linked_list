@@ -21,16 +21,16 @@ int main()
 
     std::cout << std::format("{}\n", myList.GetList());
 
-    std::array<Node*, 3> selectedNodes;
-    selectedNodes.at(0) = myList.GetNodeByValue(static_cast<int32_t>(10));
-    selectedNodes.at(1) = myList.GetNodeByValue(static_cast<int32_t>(15));
-    selectedNodes.at(2) = myList.GetNodeByValue(static_cast<int32_t>(0));
+    std::array<int32_t, 3> selectedNodes;
+    selectedNodes.at(0) = 10;
+    selectedNodes.at(1) = 15;
+    selectedNodes.at(2) = 0;
     for (auto i = 0; i < 3; ++i)
     {
-        myList.Delete(selectedNodes.at(i));
+        myList.Delete(myList.GetNodeByValue(selectedNodes.at(i)));
         
     }
-    selectedNodes.fill(nullptr);
+    selectedNodes = {};
     std::cout << std::format("{}\n", myList.GetList());
 
     myList.Add(100);

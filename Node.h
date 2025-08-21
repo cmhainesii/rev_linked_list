@@ -3,13 +3,14 @@
 
 #include <cstdint>
 #include <format>
+#include <memory>
 
 class Node {
   public:
     Node(int32_t value);
     Node();
     int32_t value;
-    Node *next;
+    std::unique_ptr<Node> next;
 };
 
 #endif

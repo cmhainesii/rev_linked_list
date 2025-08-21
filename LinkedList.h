@@ -20,7 +20,7 @@ class LinkedList
     std::string GetList() const;
     void Clear();
   private:
-    Node *head;
+    std::unique_ptr<Node> head;
 };
 
 

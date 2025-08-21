@@ -8,52 +8,52 @@ LinkedList::LinkedList()
 
 void LinkedList::Add(int32_t value)
 {
-    Node *newNode = new Node(value);
+    std::unique_ptr<Node> newNode = std::make_unique<Node>(value);
 
 
-    // Welocome the new node to the list by neutering it
+    // Welocome the new node to the list by steralizing it
     newNode->next = nullptr;
     // Special proceedure for welcoming the very first node:
     if (head == nullptr)
     {
-        head = newNode;
+        head = std::move(newNode);
         return;
     }
 
     // Procedure for slightly less important nodes that come after the first because
     // the first node is already experiencing true bliss.
-    Node *current = head;
+    Node *current = head.get();
+
     while(current->next != nullptr) // Find a nice spot at the very end of the list!
     {
-        current = current->next;
+        current = current->next.get();
     }
-    current->next = newNode; 
+    current->next = std::move(newNode); 
 }
 
 void LinkedList::Delete(Node *doomedNode)
 {
     // Traverse the list until the doomed node is found. If it's hiding here. 
     // It will be found and... dealt with.
-    Node *current = head;
-    Node *previous = nullptr;
+    Node *current = head.get();
+    Node* previous = nullptr;
     while(current != nullptr)
     {
         if(current->value == doomedNode->value)
         {
             if(previous == nullptr) // This means head node is to be detained immediately.
             {
-                head = head->next;
+                head = std::move(head->next);
             }
             else
             {
-                previous->next = current->next;
+                previous->next = std::move(current->next);
             }
-            delete current;
             return;
         }
         // Not the right node, keep moving forward!
         previous = current;
-        current = current->next;
+        current = current->next.get();
     }
 }
 
@@ -61,27 +61,27 @@ std::string LinkedList::GetList() const
 {
     std::ostringstream output;
 
-    Node* current = head;
+    Node* current = head.get();
     while(current != nullptr)
     {
         output << current->value << " ";
-        current = current->next;
+        current = current->next.get();
     }
     return output.str();
 }
 
 void LinkedList::Reverse()
 {
-    Node *prev = nullptr;
-    Node *current = head;
-    while(current != nullptr)
+    std::unique_ptr<Node> prev = nullptr;
+    std::unique_ptr<Node> current = std::move(head);
+    while(current)
     {
-        Node *nextNode = current->next;
-        current->next = prev;
-        prev = current;
-        current = nextNode;
+        std::unique_ptr<Node> next = std::move(current->next);
+        current->next = std::move(prev);
+        prev = std::move(current);
+        current = std::move(next);
     }
-    head = prev;
+    head = std::move(prev);
 }
 
 LinkedList::~LinkedList()
@@ -94,7 +94,7 @@ Node* LinkedList::GetNodeByValue(int32_t value)
     Node *result = nullptr;
     
     // Traverse starting at head
-    Node *current = head;
+    Node *current = head.get();
 
     while(current)
     {
@@ -102,7 +102,7 @@ Node* LinkedList::GetNodeByValue(int32_t value)
             result = current;
             break;
         }
-        current = current->next;
+        current = current->next.get();
 
     }
 
@@ -112,12 +112,11 @@ Node* LinkedList::GetNodeByValue(int32_t value)
 void LinkedList::Clear()
 {
     // Traverse the list and delete every node on the way!
-    Node* current = head;
+    std::unique_ptr<Node> current = std::move(head);
     while(current)
     {
-        Node *next = current->next;
-        delete current;
-        current = next;
+        std::unique_ptr<Node> next = std::move(current->next);
+        current = std::move(next);
     }
     head = nullptr;
 }
