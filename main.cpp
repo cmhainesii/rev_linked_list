@@ -48,6 +48,19 @@ int main()
     myList.Add(69);
 
     std::cout << std::format("Not blank: {}\n", myList.GetList());
+
+    myList.Clear();
+
+    myList.Add(6);
+    myList.Add(6);
+    myList.Add(1961);
+
+    std::cout << "Better List\n";
+    std::cout << std::format("{}\n", myList.GetList());
+
+    std::cout << "Better List Backwards:\n";
+    myList.Reverse();
+    std::cout << std::format("{}\n", myList.GetList());
     
     return 0;
 }
